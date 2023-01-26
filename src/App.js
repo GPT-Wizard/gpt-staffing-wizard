@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Navbar from "./components/navbar";
+import StaffingHelper from "./pages/staffingHelper";
+
+const NavbarItems = {
+  StaffingHelper: "Find perfect team",
+};
 
 function App() {
+  const [currentPage, setCurrentPage] = useState(NavbarItems.StaffingHelper);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-wave-blue container mx-auto">
+      <Navbar
+        currentPage={currentPage}
+        changePage={setCurrentPage}
+        navbarItems={NavbarItems}
+      />
+      {currentPage === NavbarItems.StaffingHelper && <StaffingHelper />}
+      
     </div>
   );
 }
