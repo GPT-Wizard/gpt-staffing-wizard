@@ -11,11 +11,11 @@ module.exports = {
       transparent: "rgb(0, 0, 0, 0)",
       white: "#ffffff",
       black: "#000000",
-      "wave-blue": "#003d50",
+      primary: "#232225",
       "mist-gray": "#edf1f3",
       "flamingo-pink": "#f2617a",
       "black-transparent": "rgb(0, 0, 0, 0.2)",
-      "white-transparent": "rgb(255, 255, 255, 0.6)",
+      "white-transparent": "rgba(255, 255, 255, 0.05)",
     },
   },
   variants: {

@@ -8,19 +8,6 @@
 }
 
 @layer utilities {
-  .optionSelected {
-    color: #f2617a;
-    border-color: #f2617a;
-  }
-  .navbar-selected {
-    background-color: #f2617a;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-}
-.ace-tm,
-.ace_gutter {
-  background-color: transparent !important;
 }
 
 * {
@@ -37,5 +24,5 @@ body {
   padding: 0;
   min-height: 100%;
   width: 100%;
-  background-color: #003d50;
+  background-color: #232225;
 }

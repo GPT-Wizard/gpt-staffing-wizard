@@ -7,17 +7,16 @@ const NavbarItems = {
 };
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(NavbarItems.StaffingHelper);
+  // const [currentPage, setCurrentPage] = useState(NavbarItems.StaffingHelper);
 
   return (
-    <div className="bg-wave-blue container mx-auto">
-      <Navbar
+    <div className="container mx-auto">
+      {/* <Navbar
         currentPage={currentPage}
         changePage={setCurrentPage}
         navbarItems={NavbarItems}
-      />
-      {currentPage === NavbarItems.StaffingHelper && <StaffingHelper />}
-      
+      /> */}
+      <StaffingHelper />
     </div>
   );
 }
