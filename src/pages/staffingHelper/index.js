@@ -1,251 +1,120 @@
-import { Configuration, OpenAIApi } from "openai";
 import React, { useEffect, useRef, useState } from "react";
-import Robot from "../../assets/images/robot.svg";
-import Person from "../../assets/images/person.svg";
-import Checkboxes from "../../components/inputs/Checkboxes";
-import TextArea from "../../components/inputs/TextArea";
-import SingleButton from "../../components/inputs/SingleButton";
-
-const configuration = new Configuration({
-  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
+import fetchResponse from "../../api/fetchResponse";
+import UserMessage from "../../components/message/UserMessage";
+import AiMessage from "../../components/message/AiMessage";
+import UserInput from "../../components/inputs";
+import {
+  conversationSteps,
+  nextConversationStep,
+  restartConversationStep,
+  skipConversationStep,
+} from "../../components/conversationStep";
 
 function StaffingHelper() {
   const [conversations, setConversations] = useState([
     {
-      sender: "ai",
+      sender: "AI",
       text: "Hi Staffing Manager! Shall we start building staffing plans?",
     },
   ]);
-  const [conversationStep, setConversationStep] = useState("welcome");
   const [showInput, setShowInput] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const conversationRef = useRef();
   const [projectDescription, setProjectDescription] = useState("");
-  const [services, setServices] = useState([
-    {
-      id: "staffing-notes",
-      state: true,
-      text: "Prepare staffing notes",
-      completed: false,
-    },
-    {
-      id: "ideal-team",
-      state: true,
-      text: "Form an ideal team",
-      completed: false,
-    },
-    {
-      id: "role-importance",
-      state: true,
-      text: "Make points for importance of the role for TWers",
-      completed: false,
-    },
-    {
-      id: "assessment",
-      state: true,
-      text: "Give questionnaire to asses TWers for the role",
-      completed: false,
-    },
-  ]);
 
-  const updateServiceCompletion = (serviceId) => {
-    let servicesCopy = [...services];
-    let serviceIndex = servicesCopy.findIndex(
-      (service) => service.id === serviceId
-    );
+  const generate = async (aiMessage, userMessage, conversationStep) => {
+    const response = await fetchResponse(conversationStep, conversations);
 
-    servicesCopy[serviceIndex] = {
-      ...servicesCopy[serviceIndex],
-      completed: true,
-    };
-
-    setServices(servicesCopy);
+    setConversations([
+      ...conversations,
+      { sender: "User", text: userMessage },
+      {
+        sender: "AI",
+        text: aiMessage,
+      },
+      {
+        sender: "AI",
+        text: response.replaceAll("\n", "<br />"),
+      },
+      {
+        sender: "AI",
+        text: "Is this ok?",
+      },
+    ]);
+    setShowInput(true);
+    setIsLoading(false);
   };
 
-  const aiPersona =
-    "You are one of the smartest staffing manager in the world working for thoughtworks. Your job is see how well you can devise a staffing plan for an software development project.";
+  const addConversation = (userMessage, aiMessage) => {
+    setConversations([...conversations, { sender: "User", text: userMessage }]);
+    setShowInput(false);
 
-  const formatConversations = () => {
-    let previousConversations = ``;
-
-    for (let conversation of conversations) {
-      previousConversations += `${conversation.sender}: ${conversation.text}\n`;
-    }
-
-    return previousConversations;
-  };
-
-  const removeEmptyLinesAtStart = (text) => {
-    if (text.startsWith("\n")) {
-      return removeEmptyLinesAtStart(text.slice(2));
-    }
-    if (text.startsWith(" ")) {
-      return removeEmptyLinesAtStart(text.slice(1));
-    }
-
-    return text;
-  };
-  const generate = async (serviceId, psmMessage) => {
-    try {
-      const previousConversations = formatConversations();
-      const prompts = {
-        "staffing-notes": `${aiPersona} \n We had these conversations where you played the role "ai" and I played the role "psm".\n Past Conversation: ${previousConversations} \n Based on the above information, tell me as a smart staffing manager of Thoughtworks, how will you asses the need from tech and non tech perspective, in the format: Staffing Notes: \n\nTech Perspective: points \n\n Non Tech Perspective: points`,
-        "ideal-team": ``,
-        "role-importance": ``,
-        assessment: ``,
-      };
-      const openai = new OpenAIApi(configuration);
-      const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompts[serviceId],
-        max_tokens: 1024,
-      });
-      const response = removeEmptyLinesAtStart(completion.data.choices[0].text);
+    setTimeout(() => {
       setConversations([
         ...conversations,
-        { sender: "psm", text: psmMessage },
+        { sender: "User", text: userMessage },
         {
-          sender: "ai",
-          text: response.replaceAll("\n", "<br />"),
-        },
-        {
-          sender: "ai",
-          text: "Is this ok?",
+          sender: "AI",
+          text: aiMessage,
         },
       ]);
-      updateServiceCompletion(serviceId);
       setShowInput(true);
-    } catch (error) {
-      console.error(error);
+    }, 500);
+
+    const nextConversationStepIndex = userMessage.startsWith("Skip")
+      ? skipConversationStep()
+      : nextConversationStep();
+
+    if (
+      nextConversationStepIndex === 3 ||
+      nextConversationStepIndex === 5 ||
+      nextConversationStepIndex === 7 ||
+      nextConversationStepIndex === 9
+    ) {
+      setIsLoading(true);
+      generate(
+        userMessage,
+        aiMessage,
+        conversationSteps[nextConversationStepIndex]
+      );
     }
   };
 
-  const aiMessage = (text) => (
-    <div className="flex max-w-[80%] mb-4 items-start">
-      <img src={Robot} className="w-16" alt="" />
-      <p
-        className="bg-primary p-4 h-fit rounded-lg rounded-tl-none ml-4 min-h-[4rem] flex items-center justify-start"
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
-    </div>
-  );
-  const psmMessage = (text) => (
-    <div className="flex max-w-[80%] ml-auto mb-4 justify-end items-start">
-      <p
-        className="bg-primary p-4 h-fit rounded-lg rounded-tr-none mr-4 min-h-[4rem] flex items-center justify-start"
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
-      <img src={Person} className="w-16" alt="" />
-    </div>
-  );
-
-  const nextStep = (psmMessage, aiMessage) => {
-    setConversations([...conversations, { sender: "psm", text: psmMessage }]);
-    setShowInput(false);
-    if (aiMessage) {
-      setTimeout(() => {
-        setConversations([
-          ...conversations,
-          { sender: "psm", text: psmMessage },
-          {
-            sender: "ai",
-            text: aiMessage,
-          },
-        ]);
-        setShowInput(true);
-      }, 500);
-    }
-
-    if (conversationStep === "welcome")
-      setConversationStep("project-description");
-    else if (conversationStep === "project-description")
-      setConversationStep("services-required");
-    else {
-      for (let service of services) {
-        if (service.state && !service.completed) {
-          generate(service.id, psmMessage);
-          setConversationStep(service.id);
-          break;
-        }
-      }
-    }
+  const restartConversation = () => {
+    restartConversationStep();
+    setConversations([
+      {
+        sender: "AI",
+        text: "Hi Staffing Manager! Shall we start building staffing plans?",
+      },
+    ]);
+    setIsLoading(false);
+    setShowInput(true);
   };
 
   useEffect(() => {
     conversationRef.current.scrollTo(0, conversationRef.current.scrollHeight);
   }, [conversations]);
 
-  const getServicesMessage = () => {
-    let serviceMessage = `Services selected:<br/><br/>`;
-
-    for (let service of services) {
-      if (service.state) {
-        serviceMessage += `- ${service.text}<br/>`;
-      }
-    }
-
-    return serviceMessage;
-  };
-
-  const psmInput = () => {
-    if (conversationStep === "welcome") {
-      return (
-        <SingleButton
-          text="Let's begin!"
-          onSubmit={() =>
-            nextStep(
-              "Let's begin!",
-              "Please provide me with the project description."
-            )
-          }
-        />
-      );
-    } else if (conversationStep === "project-description") {
-      return (
-        <TextArea
-          placeholder="Enter the project description…"
-          text={projectDescription}
-          onTextChange={setProjectDescription}
-          onSubmit={() =>
-            nextStep(
-              projectDescription,
-              "What do you want me to help you with?"
-            )
-          }
-        />
-      );
-    } else if (conversationStep === "services-required") {
-      return (
-        <Checkboxes
-          checkboxes={services}
-          onCheckboxesChange={setServices}
-          onSubmit={() => {
-            nextStep(getServicesMessage());
-          }}
-        />
-      );
-    } else if (conversationStep === "staffing-notes") {
-      return (
-        <SingleButton
-          text="Yes, Let's proceed!"
-          // onSubmit={() => nextStep("Yes, Let's proceed!")}
-          onSubmit={() => {}}
-        />
-      );
-    }
-  };
-
   return (
-    <div className="w-full h-[100vh] flex justify-center items-end pb-10">
-      <div className="bg-white-transparent h-[80vh] w-[750px] rounded-lg p-10 flex flex-col justify-between">
+    <div className="w-full h-full flex justify-center items-end pb-10 mt-10">
+      <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-10 flex flex-col justify-between">
         <div className="h-[60vh] overflow-y-auto" ref={conversationRef}>
           {conversations.map((message) => {
-            if (message.sender === "ai") return aiMessage(message.text);
-            else return psmMessage(message.text);
+            if (message.sender === "AI")
+              return <AiMessage text={message.text} />;
+            else return <UserMessage text={message.text} />;
           })}
         </div>
 
-        {showInput && psmInput()}
+        {showInput && !isLoading && (
+          <UserInput
+            addConversation={addConversation}
+            projectDescription={projectDescription}
+            setProjectDescription={setProjectDescription}
+            restartConversation={restartConversation}
+          />
+        )}
       </div>
     </div>
   );
