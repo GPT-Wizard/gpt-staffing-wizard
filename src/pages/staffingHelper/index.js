@@ -97,7 +97,7 @@ function StaffingHelper() {
   }, [conversations]);
 
   return (
-    <div className="w-full h-full flex justify-center items-end pb-10 mt-10">
+    <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10">
       <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-10 flex flex-col justify-between">
         <div className="h-[60vh] overflow-y-auto" ref={conversationRef}>
           {conversations.map((message) => {
