@@ -98,8 +98,8 @@ function StaffingHelper() {
 
   return (
     <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10">
-      <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-10 flex flex-col justify-between">
-        <div className="h-[60vh] overflow-y-auto" ref={conversationRef}>
+      <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
+        <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
           {conversations.map((message) => {
             if (message.sender === "AI")
               return <AiMessage text={message.text} />;
