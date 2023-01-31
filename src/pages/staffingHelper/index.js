@@ -19,8 +19,10 @@ function StaffingHelper() {
   ]);
   const [showInput, setShowInput] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const conversationRef = useRef();
   const [projectDescription, setProjectDescription] = useState("");
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const conversationRef = useRef();
 
   const generate = async (aiMessage, userMessage, conversationStep) => {
     const response = await fetchResponse(conversationStep, conversations);
@@ -42,6 +44,7 @@ function StaffingHelper() {
       },
     ]);
     setShowInput(true);
+    setShowSidebar(true);
     setIsLoading(false);
   };
 
@@ -82,6 +85,7 @@ function StaffingHelper() {
 
   const restartConversation = () => {
     restartConversationStep();
+    setShowSidebar(false);
     setConversations([
       {
         sender: "AI",
@@ -97,7 +101,7 @@ function StaffingHelper() {
   }, [conversations]);
 
   return (
-    <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10">
+    <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5">
       <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
         <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
           {conversations.map((message) => {
@@ -116,6 +120,9 @@ function StaffingHelper() {
           />
         )}
       </div>
+      {showSidebar && (
+        <div className="flex-1 h-[80vh] bg-white-transparent rounded-lg p-8"></div>
+      )}
     </div>
   );
 }
