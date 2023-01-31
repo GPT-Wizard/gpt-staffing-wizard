@@ -36,7 +36,7 @@ function StaffingHelper() {
       },
       {
         sender: "AI",
-        text: response.replaceAll("\n", "<br />"),
+        text: response,
       },
       {
         sender: "AI",
@@ -52,17 +52,17 @@ function StaffingHelper() {
     setConversations([...conversations, { sender: "User", text: userMessage }]);
     setShowInput(false);
 
-    setTimeout(() => {
-      setConversations([
-        ...conversations,
-        { sender: "User", text: userMessage },
-        {
-          sender: "AI",
-          text: aiMessage,
-        },
-      ]);
-      setShowInput(true);
-    }, 500);
+    // setTimeout(() => {
+    setConversations([
+      ...conversations,
+      { sender: "User", text: userMessage },
+      {
+        sender: "AI",
+        text: aiMessage,
+      },
+    ]);
+    setShowInput(true);
+    // }, 500);
 
     const nextConversationStepIndex = userMessage.startsWith("Skip")
       ? skipConversationStep()
@@ -105,6 +105,7 @@ function StaffingHelper() {
       <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
         <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
           {conversations.map((message) => {
+            console.log(message.text);
             if (message.sender === "AI")
               return <AiMessage text={message.text} />;
             else return <UserMessage text={message.text} />;
@@ -120,9 +121,9 @@ function StaffingHelper() {
           />
         )}
       </div>
-      {showSidebar && (
+      {/* {showSidebar && (
         <div className="flex-1 h-[80vh] bg-white-transparent rounded-lg p-8"></div>
-      )}
+      )} */}
     </div>
   );
 }

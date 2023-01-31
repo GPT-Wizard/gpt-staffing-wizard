@@ -32,7 +32,7 @@ const UserInput = ({
           onSubmit={() =>
             addConversation(
               projectDescription,
-              "Super! Shall we prepare staffing staffing notes?"
+              "Super! Shall we prepare staffing notes?"
             )
           }
         />
