@@ -14,7 +14,7 @@ function Navbar(props) {
           />
           <div>
             <p className="font-bitter text-xl">Staffing</p>
-            <p className="font-bitter text-xl">Planner</p>
+            <p className="font-bitter text-xl">Wizard</p>
           </div>
         </div>
         <Pdf {...props} />

@@ -71,6 +71,7 @@ function StaffingHelper({ state, dispatch }) {
       {
         sender: "AI",
         text: response,
+        conversationStep,
       },
       {
         sender: "AI",
@@ -83,7 +84,10 @@ function StaffingHelper({ state, dispatch }) {
   };
 
   const addConversation = (userMessage, aiMessage) => {
-    setConversations([...conversations, { sender: "User", text: userMessage }]);
+    setConversations([
+      ...conversations,
+      { sender: "User", text: userMessage },
+    ]);
     setShowInput(false);
 
     // setTimeout(() => {
@@ -131,21 +135,30 @@ function StaffingHelper({ state, dispatch }) {
   };
 
   useEffect(() => {
-    conversationRef.current.scrollTo(0, conversationRef.current.scrollHeight);
+    conversationRef.current.scrollTo(
+      0,
+      conversationRef.current.scrollHeight
+    );
   }, [conversations]);
 
   console.log(state);
 
   return (
-    <div className="flex">
-      <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5">
-        <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
-          <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
+    <div className='flex'>
+      <div className='w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5'>
+        <div className='bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between'>
+          <div
+            className='h-[60vh] px-2 overflow-y-auto'
+            ref={conversationRef}
+          >
             {conversations.map((message, index) => {
               if (message.sender === "AI")
                 return (
                   <div key={index}>
-                    <AiMessage text={message.text} />
+                    <AiMessage
+                      text={message.text}
+                      step={message.conversationStep}
+                    />
                   </div>
                 );
               else
@@ -173,25 +186,27 @@ function StaffingHelper({ state, dispatch }) {
           )}
         </div>
       </div>
-      <div className="w-[30%] h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5 ">
-        <div className="bg-white-transparent h-[40vh] w-full max-w-[750px] rounded-lg p-8 flex flex-wrap justify-between">
+      <div className='w-[30%] h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5 '>
+        <div className='bg-white-transparent h-[40vh] w-full max-w-[750px] rounded-lg p-8 flex flex-wrap justify-between'>
           {timelineSteps.map((item, index) => {
             if (listIndex !== index)
               return [
-                <div className="flex w-[85%]">
-                  <div className=" w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-white flex justify-center items-center mr-4 text-black font-semibold ">
+                <div className='flex w-[85%]'>
+                  <div className=' w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-white flex justify-center items-center mr-4 text-black font-semibold '>
                     {index + 1}
                   </div>
-                  <div className="h-[5vh] w-[80%] ">{item}</div>
+                  <div className='h-[5vh] w-[80%] '>{item}</div>
                 </div>,
               ];
             else
               return [
-                <div className="flex w-[85%]">
-                  <div className=" w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-secondary flex justify-center items-center mr-4 text-white font-semibold ">
+                <div className='flex w-[85%]'>
+                  <div className=' w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-secondary flex justify-center items-center mr-4 text-white font-semibold '>
                     {index + 1}
                   </div>
-                  <div className="h-[5vh] w-[80%] text-[#FF4057]">{item}</div>
+                  <div className='h-[5vh] w-[80%] text-[#FF4057]'>
+                    {item}
+                  </div>
                 </div>,
               ];
           })}
