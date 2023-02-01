@@ -9,6 +9,7 @@ import {
   restartConversationStep,
   skipConversationStep,
 } from "../../components/conversationStep";
+import DataTable from "../../components/table/table";
 
 function StaffingHelper() {
   const [conversations, setConversations] = useState([
@@ -37,6 +38,7 @@ function StaffingHelper() {
       {
         sender: "AI",
         text: response,
+        conversationStep,
       },
       {
         sender: "AI",
@@ -49,7 +51,10 @@ function StaffingHelper() {
   };
 
   const addConversation = (userMessage, aiMessage) => {
-    setConversations([...conversations, { sender: "User", text: userMessage }]);
+    setConversations([
+      ...conversations,
+      { sender: "User", text: userMessage },
+    ]);
     setShowInput(false);
 
     // setTimeout(() => {
@@ -97,17 +102,27 @@ function StaffingHelper() {
   };
 
   useEffect(() => {
-    conversationRef.current.scrollTo(0, conversationRef.current.scrollHeight);
+    conversationRef.current.scrollTo(
+      0,
+      conversationRef.current.scrollHeight
+    );
   }, [conversations]);
 
   return (
-    <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5">
-      <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
-        <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
+    <div className='w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5'>
+      <div className='bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between'>
+        <div
+          className='h-[60vh] px-2 overflow-y-auto'
+          ref={conversationRef}
+        >
           {conversations.map((message) => {
-            console.log(message.text);
             if (message.sender === "AI")
-              return <AiMessage text={message.text} />;
+              return (
+                <AiMessage
+                  text={message.text}
+                  step={message.conversationStep}
+                />
+              );
             else return <UserMessage text={message.text} />;
           })}
         </div>
