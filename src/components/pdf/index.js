@@ -51,6 +51,8 @@ function PdfDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <Header />
+      </Page>
+      <Page size="A4" style={styles.page}>
         {projectDescription && (
           <ProjectDescription projectDescription={projectDescription} />
         )}

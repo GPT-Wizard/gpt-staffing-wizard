@@ -21,6 +21,15 @@ const styles = StyleSheet.create({
       height: "45px",
     },
   },
+  title: {
+    container: {
+      marginTop: "400px",
+    },
+    text: {
+      fontSize: "72px",
+      fontFamily: "bitter",
+    },
+  },
   section: {
     container: {
       marginTop: "50px",
