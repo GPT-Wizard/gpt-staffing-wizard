@@ -106,6 +106,7 @@ export default function DataEditingGrid({ data }) {
       <DataGrid
         rows={rows}
         columns={columns}
+        hideFooter
         onCellKeyDown={handleCellKeyDown}
         cellModesModel={cellModesModel}
         onCellModesModelChange={(model) => setCellModesModel(model)}

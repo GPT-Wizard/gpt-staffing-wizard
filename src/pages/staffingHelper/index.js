@@ -9,7 +9,6 @@ import {
   restartConversationStep,
   skipConversationStep,
 } from "../../components/conversationStep";
-import DataTable from "../../components/table/table";
 
 function StaffingHelper() {
   const [conversations, setConversations] = useState([
