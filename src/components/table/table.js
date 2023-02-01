@@ -160,12 +160,13 @@ export default function DataEditingGrid({ data }) {
   ];
 
   return (
-    <div style={{ height: "400px", width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
         editMode='row'
         hideFooter
+        autoHeight
         rowModesModel={rowModesModel}
         onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
         onRowEditStart={handleRowEditStart}
