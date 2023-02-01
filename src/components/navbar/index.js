@@ -1,7 +1,8 @@
 import React from "react";
 import GptLogo from "../../assets/images/gpt-wizard.png";
+import Pdf from "../../pages/pdf";
 
-function Navbar() {
+function Navbar(props) {
   return (
     <>
       <div className="flex justify-between py-6 pt-7 font-inter items-center">
@@ -16,9 +17,7 @@ function Navbar() {
             <p className="font-bitter text-xl">Planner</p>
           </div>
         </div>
-        <button className="self-center bg-black-transparent hover:bg-secondary px-4 py-2 rounded-lg transition-all duration-300">
-          Export to PDF
-        </button>
+        <Pdf {...props} />
       </div>
     </>
   );

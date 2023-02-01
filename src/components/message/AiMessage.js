@@ -6,7 +6,7 @@ import Robot from "../../assets/images/robot.svg";
 const AiMessage = ({ text }) => (
   <div className="flex max-w-full w-fit mb-4 ml-4 items-start">
     <img src={Robot} className="w-16" alt="" />
-    <p className="bg-primary p-4 h-fit rounded-lg rounded-tl-none ml-4 min-h-[4rem] flex items-center justify-start flex-1 overflow-x-auto">
+    <div className="bg-primary p-4 h-fit rounded-lg rounded-tl-none ml-4 min-h-[4rem] flex items-center justify-start flex-1 overflow-x-auto">
       {/* <Typewriter
         onInit={(typewriter) => {
           typewriter.typeString(text).start();
@@ -18,7 +18,7 @@ const AiMessage = ({ text }) => (
         }}
       /> */}
       <MarkdownPreview source={text} style={{ background: "transparent" }} />
-    </p>
+    </div>
   </div>
 );
 

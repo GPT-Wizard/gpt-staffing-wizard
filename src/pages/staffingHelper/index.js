@@ -10,7 +10,12 @@ import {
   skipConversationStep,
 } from "../../components/conversationStep";
 
-function StaffingHelper() {
+function StaffingHelper({
+  setStaffingNotes,
+  setIdealTeam,
+  setRoleImportance,
+  setRoleAssessment,
+}) {
   const [conversations, setConversations] = useState([
     {
       sender: "AI",
@@ -25,7 +30,26 @@ function StaffingHelper() {
   const conversationRef = useRef();
 
   const generate = async (aiMessage, userMessage, conversationStep) => {
+    localStorage.setItem("staffing-notes", "bye");
     const response = await fetchResponse(conversationStep, conversations);
+
+    switch (conversationStep) {
+      case "staffing-notes-end":
+        setStaffingNotes(response);
+        break;
+      case "ideal-team-end":
+        setIdealTeam(response);
+        break;
+      case "role-importance-end":
+        setRoleImportance(response);
+        break;
+      case "role-assessment-end":
+        setRoleAssessment(response);
+        break;
+
+      default:
+        break;
+    }
 
     setConversations([
       ...conversations,
@@ -104,11 +128,19 @@ function StaffingHelper() {
     <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5">
       <div className="bg-white-transparent h-[80vh] w-full max-w-[750px] rounded-lg p-8 flex flex-col justify-between">
         <div className="h-[60vh] px-2 overflow-y-auto" ref={conversationRef}>
-          {conversations.map((message) => {
-            console.log(message.text);
+          {conversations.map((message, index) => {
             if (message.sender === "AI")
-              return <AiMessage text={message.text} />;
-            else return <UserMessage text={message.text} />;
+              return (
+                <div key={index}>
+                  <AiMessage text={message.text} />
+                </div>
+              );
+            else
+              return (
+                <div key={index}>
+                  <UserMessage text={message.text} />
+                </div>
+              );
           })}
         </div>
 
