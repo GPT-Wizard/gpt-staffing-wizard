@@ -7,6 +7,54 @@ const styles = StyleSheet.create({
     fontFamily: "inter",
     color: "#ffffff",
   },
+  header: {
+    container: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "20px",
+    },
+    twLogo: {
+      height: "32px",
+    },
+    gptLogo: {
+      height: "45px",
+    },
+  },
+  section: {
+    container: {
+      marginTop: "50px",
+    },
+    heading: {
+      container: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: "17.5px",
+      },
+      icon: {
+        width: "28px",
+      },
+      text: {
+        fontFamily: "bitter",
+        fontSize: "18px",
+      },
+    },
+    text: {
+      fontSize: "12px",
+      textAlign: "justify",
+    },
+    boldText: {
+      fontSize: "12px",
+      fontWeight: "semibold",
+      marginTop: "5px",
+      marginBottom: "5px",
+    },
+  },
+  break: {
+    width: "100%",
+    height: "24px",
+    display: "block",
+  },
   footer: {
     fontFamily: "inter",
     fontWeight: "semibold",

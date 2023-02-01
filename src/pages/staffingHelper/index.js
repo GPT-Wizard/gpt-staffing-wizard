@@ -10,12 +10,7 @@ import {
   skipConversationStep,
 } from "../../components/conversationStep";
 
-function StaffingHelper({
-  setStaffingNotes,
-  setIdealTeam,
-  setRoleImportance,
-  setRoleAssessment,
-}) {
+function StaffingHelper({ state, dispatch }) {
   const [conversations, setConversations] = useState([
     {
       sender: "AI",
@@ -24,7 +19,6 @@ function StaffingHelper({
   ]);
   const [showInput, setShowInput] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [projectDescription, setProjectDescription] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
 
   const conversationRef = useRef();
@@ -35,16 +29,19 @@ function StaffingHelper({
 
     switch (conversationStep) {
       case "staffing-notes-end":
-        setStaffingNotes(response);
+        dispatch({ type: "SET_STAFFING_NOTES", payload: response });
         break;
       case "ideal-team-end":
-        setIdealTeam(response);
+        dispatch({ type: "SET_IDEAL_TEAM", payload: response });
         break;
       case "role-importance-end":
-        setRoleImportance(response);
+        dispatch({
+          type: "SET_ROLE_IMPORTANCE",
+          payload: response,
+        });
         break;
       case "role-assessment-end":
-        setRoleAssessment(response);
+        dispatch({ type: "SET_ROLE_ASSESSMENT", payload: response });
         break;
 
       default:
@@ -147,8 +144,13 @@ function StaffingHelper({
         {showInput && !isLoading && (
           <UserInput
             addConversation={addConversation}
-            projectDescription={projectDescription}
-            setProjectDescription={setProjectDescription}
+            projectDescription={state.projectDescription}
+            setProjectDescription={(newProjectDescription) =>
+              dispatch({
+                type: "SET_PROJECT_DESCRIPTION",
+                payload: newProjectDescription,
+              })
+            }
             restartConversation={restartConversation}
           />
         )}

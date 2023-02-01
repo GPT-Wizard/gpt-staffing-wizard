@@ -20,7 +20,7 @@ Font.register({
 });
 Font.registerHyphenationCallback((word) => [word]);
 
-function Pdf({ staffingNotes, idealTeam, roleImportance, roleAssessment }) {
+function Pdf({ state }) {
   const [loadPdf, setLoadPdf] = useState(false);
 
   useEffect(() => {
@@ -33,13 +33,14 @@ function Pdf({ staffingNotes, idealTeam, roleImportance, roleAssessment }) {
     () =>
       loadPdf ? (
         <PdfDocument
-          staffingNotes={staffingNotes}
-          idealTeam={idealTeam}
-          roleImportance={roleImportance}
-          roleAssessment={roleAssessment}
+          staffingNotes={state.staffingNotes}
+          idealTeam={state.idealTeam}
+          roleImportance={state.roleImportance}
+          roleAssessment={state.roleAssessment}
+          projectDescription={state.projectDescription}
         />
       ) : null,
-    [loadPdf, staffingNotes, idealTeam, roleImportance, roleAssessment]
+    [loadPdf, state]
   );
   const [instance, update] = usePDF({ document });
 

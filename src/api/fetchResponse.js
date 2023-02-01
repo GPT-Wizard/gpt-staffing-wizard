@@ -39,8 +39,8 @@ const fetchResponse = async (conversationStep, conversations) => {
     const prompts = {
       "staffing-notes-end": `${starterPrompt}, how will you asses the need from tech and non tech perspective, in the format: \n\nTech Perspective: bullet points \n\n Non Tech Perspective: bullet points`,
       "ideal-team-end": `${starterPrompt}, give me an ideal team combination for this project with roles in thoughtworks in the markdown table format with headers Role, Number of People, Years of Experience and Possible skill required`,
-      "role-importance-end": `${starterPrompt}, now give me a sales pitch to convince these various roles from Thoughtworks to join this project in a format: \n\nRole \nSales Pitch`,
-      "role-assessment-end": `${starterPrompt}, now the role decides to join. For Thoughtworks, How do I assess the role based on project context. I am a staffing manager, so wont go in detail but still need to get a rough idea for the Above identified role will be able to do the task, in markdown format: \nRole: \nAssessment Conversation: multiple questions line by line`,
+      "role-importance-end": `${starterPrompt}, now give me a sales pitch to convince these various roles from Thoughtworks to join this project in a format: \n\nRole: Sales Pitch`,
+      "role-assessment-end": `${starterPrompt}, now the role decides to join. For Thoughtworks, How do I assess the role based on project context. I am a staffing manager, so wont go in detail but still need to get a rough idea for the Above identified role will be able to do the task, in markdown format: \n\nRole: Assessment Conversation`,
     };
 
     const openai = new OpenAIApi(configuration);
