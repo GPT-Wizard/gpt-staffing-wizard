@@ -11,9 +11,14 @@ const formatConversations = (conversations) => {
   let previousConversations = ``;
 
   for (let conversation of conversations) {
-    previousConversations += `${conversation.sender}: ${conversation.text}\n`;
+    if (typeof conversation.text === "object") {
+      previousConversations += `${conversation.sender}: ${JSON.stringify(
+        conversation.text
+      )}\n`;
+    } else
+      previousConversations += `${conversation.sender}: ${conversation.text}\n`;
   }
-
+  console.log("prep", previousConversations);
   return previousConversations;
 };
 
@@ -32,11 +37,37 @@ const removeEmptyLinesAtStart = (text) => {
 };
 
 const getJsonTextOnly = (text) => {
-  if (text.startsWith("| Role") || text.startsWith("|Role") || text.startsWith("Role")) {
+  if (
+    text.startsWith("| Role") ||
+    text.startsWith("|Role") ||
+    text.startsWith("Role")
+  ) {
     return text;
   }
   return getJsonTextOnly(text.slice(1));
 };
+
+function getIdealTeamObject(completion) {
+  const response = getJsonTextOnly(completion.data.choices[0].text);
+  const tableRows = response
+    .split("\n")
+    .filter((row, index) => index !== 1 && row);
+  const headers = tableRows[0]
+    .split("|")
+    .map((header) => header.trim());
+
+  const result = tableRows.slice(1).map((row, index) => {
+    const id = index;
+    const columns = row.split("|").map((column) => column.trim());
+    return headers.reduce((acc, header, index) => {
+      acc[header] = columns[index];
+      acc.id = id;
+      return acc;
+    }, {});
+  });
+
+  return result;
+}
 
 const fetchResponse = async (conversationStep, conversations) => {
   try {
@@ -59,30 +90,9 @@ const fetchResponse = async (conversationStep, conversations) => {
     const response = removeEmptyLinesAtStart(
       completion.data.choices[0].text
     );
-    console.log(response);
 
     if (conversationStep === "ideal-team-end") {
-      const response = getJsonTextOnly(completion.data.choices[0].text);
-      console.log(response);
-      const tableRows = response
-        .split("\n")
-        .filter((row, index) => index !== 1 && row);
-      const headers = tableRows[0]
-        .split("|")
-        .map((header) => header.trim());
-
-      console.log(headers);
-      const result = tableRows.slice(1).map((row, index) => {
-        const id = index;
-        const columns = row.split("|").map((column) => column.trim());
-        return headers.reduce((acc, header, index) => {
-          acc[header] = columns[index];
-          acc.id = id;
-          return acc;
-        }, {});
-      });
-
-      return result;
+      return getIdealTeamObject(completion);
     }
 
     return response;
@@ -92,3 +102,5 @@ const fetchResponse = async (conversationStep, conversations) => {
 };
 
 export default fetchResponse;
+
+

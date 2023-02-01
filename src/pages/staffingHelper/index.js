@@ -24,6 +24,10 @@ function StaffingHelper() {
 
   const conversationRef = useRef();
 
+  useEffect(() => {
+    console.log("conversation:", conversations);
+  }, [conversations]);
+  
   const generate = async (aiMessage, userMessage, conversationStep) => {
     const response = await fetchResponse(conversationStep, conversations);
 

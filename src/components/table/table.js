@@ -95,25 +95,6 @@ export default function DataEditingGrid({ data }) {
   };
 
   const columns = [
-    { field: "Role", headerName: "Role", width: 180, editable: true },
-    {
-      field: "Number of People",
-      headerName: "No of People",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "Years of Experience",
-      headerName: "Experience (Yrs)",
-      width: 130,
-      editable: true,
-    },
-    {
-      field: "Possible Skills Required",
-      headerName: "Possible Skills Required",
-      width: 500,
-      editable: true,
-    },
     {
       field: "actions",
       type: "actions",
@@ -156,6 +137,25 @@ export default function DataEditingGrid({ data }) {
           />,
         ];
       },
+    },
+    { field: "Role", headerName: "Role", width: 180, editable: true },
+    {
+      field: "Number of People",
+      headerName: "No of People",
+      width: 100,
+      editable: true,
+    },
+    {
+      field: "Years of Experience",
+      headerName: "Experience (Yrs)",
+      width: 130,
+      editable: true,
+    },
+    {
+      field: "Possible Skills Required",
+      headerName: "Possible Skills Required",
+      width: 500,
+      editable: true,
     },
   ];
 
