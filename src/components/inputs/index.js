@@ -18,11 +18,11 @@ const UserInput = ({
     );
     setInputIndex(0);
   };
-   const projectDescConvo1 = () => {
+  const projectDescConvo1 = () => {
     addConversation(
       "Looks Good!",
       "Cool! Can we now put together a team that is suited to the requirements?"
-    )
+    );
     setInputIndex(1);
   };
 
@@ -30,7 +30,7 @@ const UserInput = ({
     addConversation(
       "Looks Awesome!",
       "Great! Shall we explore the importance of each role?"
-    )
+    );
     setInputIndex(2);
   };
 
@@ -38,7 +38,7 @@ const UserInput = ({
     addConversation(
       "Looks Super!",
       "Good! Can we find best way to asses TWers for each role?"
-    )
+    );
     setInputIndex(3);
   };
 
@@ -46,7 +46,7 @@ const UserInput = ({
     addConversation(
       "Looks Excellent!",
       "Fantastic! You have reached the end. Do you want create a new staffing plan?"
-    )
+    );
     setInputIndex(4);
   };
 
@@ -69,7 +69,7 @@ const UserInput = ({
           placeholder="Enter the project description…"
           text={projectDescription}
           onTextChange={setProjectDescription}
-          onSubmit={(projectDescConvo)}
+          onSubmit={projectDescConvo}
         />
       );
     case conversationSteps[2]:
@@ -79,7 +79,7 @@ const UserInput = ({
           onSubmit1={() =>
             addConversation(
               "Skip staffing notes",
-              "Sure! Can we now put together a team that is suited to the requirements?"             
+              "Sure! Can we now put together a team that is suited to the requirements?"
             )
           }
           text2="Yeah, sure!"
@@ -89,12 +89,7 @@ const UserInput = ({
         />
       );
     case conversationSteps[3]:
-      return (
-        <SingleButton
-          text="Looks Good!"
-          onSubmit={projectDescConvo1}
-        />
-      );
+      return <SingleButton text="Looks Good!" onSubmit={projectDescConvo1} />;
     case conversationSteps[4]:
       return (
         <DoubleButtons
@@ -113,10 +108,7 @@ const UserInput = ({
       );
     case conversationSteps[5]:
       return (
-        <SingleButton
-          text="Looks Awesome!"
-          onSubmit={projectDescConvo2}
-        />
+        <SingleButton text="Looks Awesome!" onSubmit={projectDescConvo2} />
       );
     case conversationSteps[6]:
       return (
@@ -135,23 +127,17 @@ const UserInput = ({
         />
       );
     case conversationSteps[7]:
-      return (
-        <SingleButton
-          text="Looks Super!"
-          onSubmit={projectDescConvo3}
-        />
-      );
+      return <SingleButton text="Looks Super!" onSubmit={projectDescConvo3} />;
     case conversationSteps[8]:
       return (
         <DoubleButtons
           text1="Skip role assessment"
-          onSubmit1={() =>
-            {addConversation(
+          onSubmit1={() => {
+            addConversation(
               "Skip role assessment",
               "Okay! You have reached the end. Do you want create a new staffing plan?"
-            )}
-            
-          }
+            );
+          }}
           text2="Yes, let's begin!"
           onSubmit2={() =>
             addConversation("Yes, let's begin!", "Just a moment, preparing!")
@@ -160,67 +146,19 @@ const UserInput = ({
       );
     case conversationSteps[9]:
       return (
-        <SingleButton
-          text="Looks Excellent!"
-          onSubmit={projectDescConvo4}
-        />
+        <SingleButton text="Looks Excellent!" onSubmit={projectDescConvo4} />
       );
     case conversationSteps[10]:
       return (
-        <DoubleButtons
+        <SingleButton
           text1="Create new plan"
           onSubmit1={() => restartConversation()}
-          text2="Export plan to PDF"
-          onSubmit2={() => restartConversation()}
         />
       );
 
     default:
       return "";
   }
-
-  // if (conversationStep === "welcome") {
-  //   return (
-  //     <SingleButton
-  //       text="Let's begin!"
-  //       onSubmit={() =>
-  //         nextStep(
-  //           "Let's begin!",
-  //           "Please provide me with the project description."
-  //         )
-  //       }
-  //     />
-  //   );
-  // } else if (conversationStep === "project-description") {
-  //   return (
-  //     <TextArea
-  //       placeholder="Enter the project description…"
-  //       text={projectDescription}
-  //       onTextChange={setProjectDescription}
-  //       onSubmit={() =>
-  //         nextStep(projectDescription, "What do you want me to help you with?")
-  //       }
-  //     />
-  //   );
-  // } else if (conversationStep === "services-required") {
-  //   return (
-  //     <Checkboxes
-  //       checkboxes={services}
-  //       onCheckboxesChange={setServices}
-  //       onSubmit={() => {
-  //         nextStep(getServicesMessage());
-  //       }}
-  //     />
-  //   );
-  // } else if (conversationStep === "staffing-notes") {
-  //   return (
-  //     <SingleButton
-  //       text="Yes, Let's proceed!"
-  //       // onSubmit={() => nextStep("Yes, Let's proceed!")}
-  //       onSubmit={() => {}}
-  //     />
-  //   );
-  // }
 };
 
 export default UserInput;
