@@ -9,7 +9,47 @@ const UserInput = ({
   setProjectDescription,
   addConversation,
   restartConversation,
+  setInputIndex,
 }) => {
+  const projectDescConvo = () => {
+    addConversation(
+      projectDescription,
+      "Super! Shall we prepare staffing notes?"
+    );
+    setInputIndex(0);
+  };
+   const projectDescConvo1 = () => {
+    addConversation(
+      "Looks Good!",
+      "Cool! Can we now put together a team that is suited to the requirements?"
+    )
+    setInputIndex(1);
+  };
+
+  const projectDescConvo2 = () => {
+    addConversation(
+      "Looks Awesome!",
+      "Great! Shall we explore the importance of each role?"
+    )
+    setInputIndex(2);
+  };
+
+  const projectDescConvo3 = () => {
+    addConversation(
+      "Looks Super!",
+      "Good! Can we find best way to asses TWers for each role?"
+    )
+    setInputIndex(3);
+  };
+
+  const projectDescConvo4 = () => {
+    addConversation(
+      "Looks Excellent!",
+      "Fantastic! You have reached the end. Do you want create a new staffing plan?"
+    )
+    setInputIndex(4);
+  };
+
   switch (getConversationStep()) {
     case conversationSteps[0]:
       return (
@@ -29,12 +69,7 @@ const UserInput = ({
           placeholder="Enter the project description…"
           text={projectDescription}
           onTextChange={setProjectDescription}
-          onSubmit={() =>
-            addConversation(
-              projectDescription,
-              "Super! Shall we prepare staffing notes?"
-            )
-          }
+          onSubmit={(projectDescConvo)}
         />
       );
     case conversationSteps[2]:
@@ -44,7 +79,7 @@ const UserInput = ({
           onSubmit1={() =>
             addConversation(
               "Skip staffing notes",
-              "Sure! Can we now put together a team that is suited to the requirements?"
+              "Sure! Can we now put together a team that is suited to the requirements?"             
             )
           }
           text2="Yeah, sure!"
@@ -57,12 +92,7 @@ const UserInput = ({
       return (
         <SingleButton
           text="Looks Good!"
-          onSubmit={() =>
-            addConversation(
-              "Looks Good!",
-              "Cool! Can we now put together a team that is suited to the requirements?"
-            )
-          }
+          onSubmit={projectDescConvo1}
         />
       );
     case conversationSteps[4]:
@@ -85,12 +115,7 @@ const UserInput = ({
       return (
         <SingleButton
           text="Looks Awesome!"
-          onSubmit={() =>
-            addConversation(
-              "Looks Awesome!",
-              "Great! Shall we explore the importance of each role?"
-            )
-          }
+          onSubmit={projectDescConvo2}
         />
       );
     case conversationSteps[6]:
@@ -113,12 +138,7 @@ const UserInput = ({
       return (
         <SingleButton
           text="Looks Super!"
-          onSubmit={() =>
-            addConversation(
-              "Looks Super!",
-              "Good! Can we find best way to asses TWers for each role?"
-            )
-          }
+          onSubmit={projectDescConvo3}
         />
       );
     case conversationSteps[8]:
@@ -126,10 +146,11 @@ const UserInput = ({
         <DoubleButtons
           text1="Skip role assessment"
           onSubmit1={() =>
-            addConversation(
+            {addConversation(
               "Skip role assessment",
               "Okay! You have reached the end. Do you want create a new staffing plan?"
-            )
+            )}
+            
           }
           text2="Yes, let's begin!"
           onSubmit2={() =>
@@ -141,12 +162,7 @@ const UserInput = ({
       return (
         <SingleButton
           text="Looks Excellent!"
-          onSubmit={() =>
-            addConversation(
-              "Looks Excellent!",
-              "Fantastic! You have reached the end. Do you want create a new staffing plan?"
-            )
-          }
+          onSubmit={projectDescConvo4}
         />
       );
     case conversationSteps[10]:
