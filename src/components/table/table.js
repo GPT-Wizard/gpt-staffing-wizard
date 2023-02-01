@@ -1,154 +1,184 @@
-import React, { useState, useMemo, useCallback } from "react";
-import PropTypes from "prop-types";
-import { DataGrid, GridCellModes } from "@mui/x-data-grid";
+import React from "react";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridRowModes,
+} from "@mui/x-data-grid";
 
 function EditToolbar(props) {
-  const {
-    selectedCellParams,
-    cellMode,
-    cellModesModel,
-    setCellModesModel,
-  } = props;
+  const { setRows, setRowModesModel, rows } = props;
 
-  const handleSaveOrEdit = () => {
-    if (!selectedCellParams) {
-      return;
-    }
-    const { id, field } = selectedCellParams;
-    if (cellMode === "edit") {
-      setCellModesModel({
-        ...cellModesModel,
-        [id]: {
-          ...cellModesModel[id],
-          [field]: { mode: GridCellModes.View },
-        },
-      });
-    } else {
-      setCellModesModel({
-        ...cellModesModel,
-        [id]: {
-          ...cellModesModel[id],
-          [field]: { mode: GridCellModes.Edit },
-        },
-      });
-    }
-  };
-
-  const handleCancel = () => {
-    if (!selectedCellParams) {
-      return;
-    }
-    const { id, field } = selectedCellParams;
-    setCellModesModel({
-      ...cellModesModel,
-      [id]: {
-        ...cellModesModel[id],
-        [field]: { mode: GridCellModes.View, ignoreModifications: true },
+  const handleClick = () => {
+    const id = rows.length;
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        Role: "",
+        "Number of People": "",
+        "Years of Experience": "",
+        "Possible Skills Required": "",
+        isNew: true,
       },
-    });
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "Role" },
+    }));
   };
 
   return (
-    <div>
-      <button className="w-20 m-2 px-2 py-1 border rounded-lg border-secondary text-secondary" onClick={handleSaveOrEdit}>
-        {cellMode === "edit" ? "Save" : "Edit"}
+    <GridToolbarContainer>
+      <button
+        className='flex px-2 py-1 m-2 border items-center border-secondary rounded-lg'
+        onClick={handleClick}
+      >
+        <AddIcon />
+        <p>Add record</p>
       </button>
-      <button className="w-20 m-2 px-2 py-1 border disabled:border-grey disabled:text-grey rounded-lg border-secondary text-secondary" onClick={handleCancel} disabled={cellMode === "view"}>
-        Cancel
-      </button>
-    </div>
+    </GridToolbarContainer>
   );
 }
 
-EditToolbar.propTypes = {
-  cellMode: PropTypes.oneOf(["edit", "view"]).isRequired,
-  cellModesModel: PropTypes.object.isRequired,
-  selectedCellParams: PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-      .isRequired,
-  }),
-  setCellModesModel: PropTypes.func.isRequired,
-};
-
 export default function DataEditingGrid({ data }) {
-  const rows = data;
-  const [selectedCellParams, setSelectedCellParams] = useState(null);
-  const [cellModesModel, setCellModesModel] = useState({});
+  const [rows, setRows] = React.useState(data);
+  const [rowModesModel, setRowModesModel] = React.useState({});
 
-  const handleCellFocus = useCallback((event) => {
-    const row = event.currentTarget.parentElement;
-    const id = row.dataset.id;
-    const field = event.currentTarget.dataset.field;
-    setSelectedCellParams({ id, field });
-  }, []);
+  const handleRowEditStart = (params, event) => {
+    event.defaultMuiPrevented = true;
+  };
 
-  const cellMode = useMemo(() => {
-    if (!selectedCellParams) {
-      return "view";
+  const handleRowEditStop = (params, event) => {
+    event.defaultMuiPrevented = true;
+  };
+
+  const handleEditClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.Edit },
+    });
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View },
+    });
+  };
+
+  const handleDeleteClick = (id) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
     }
-    const { id, field } = selectedCellParams;
-    return cellModesModel[id]?.[field]?.mode || "view";
-  }, [cellModesModel, selectedCellParams]);
+  };
 
-  const handleCellKeyDown = useCallback(
-    (params, event) => {
-      if (cellMode === "edit") {
-        // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
-        event.defaultMuiPrevented = true;
-      }
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const columns = [
+    { field: "Role", headerName: "Role", width: 180, editable: true },
+    {
+      field: "Number of People",
+      headerName: "No of People",
+      width: 100,
+      editable: true,
     },
-    [cellMode]
-  );
+    {
+      field: "Years of Experience",
+      headerName: "Experience (Yrs)",
+      width: 130,
+      editable: true,
+    },
+    {
+      field: "Possible Skills Required",
+      headerName: "Possible Skills Required",
+      width: 500,
+      editable: true,
+    },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 100,
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon className='invert' />}
+              label='Save'
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon className='invert' />}
+              label='Cancel'
+              className='textPrimary'
+              onClick={handleCancelClick(id)}
+              color='inherit'
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label='Edit'
+            className='textPrimary'
+            onClick={handleEditClick(id)}
+            color='inherit'
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label='Delete'
+            onClick={handleDeleteClick(id)}
+            color='inherit'
+          />,
+        ];
+      },
+    },
+  ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: "400px", width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        editMode='row'
         hideFooter
-        onCellKeyDown={handleCellKeyDown}
-        cellModesModel={cellModesModel}
-        onCellModesModelChange={(model) => setCellModesModel(model)}
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+        onRowEditStart={handleRowEditStart}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
         components={{
           Toolbar: EditToolbar,
         }}
         componentsProps={{
-          toolbar: {
-            cellMode,
-            selectedCellParams,
-            setSelectedCellParams,
-            cellModesModel,
-            setCellModesModel,
-          },
-          cell: {
-            onFocus: handleCellFocus,
-          },
+          toolbar: { setRows, setRowModesModel, rows },
         }}
         experimentalFeatures={{ newEditingApi: true }}
       />
     </div>
   );
 }
-
-const columns = [
-  { field: "Role", headerName: "Role", width: 180, editable: true },
-  {
-    field: "Number of People",
-    headerName: "No of People",
-    width: 100,
-    editable: true,
-  },
-  {
-    field: "Years of Experience",
-    headerName: "Experience (Yrs)",
-    width: 130,
-    editable: true,
-  },
-  {
-    field: "Possible Skills Required",
-    headerName: "Possible Skills Required",
-    width: 500,
-    editable: true,
-  },
-];

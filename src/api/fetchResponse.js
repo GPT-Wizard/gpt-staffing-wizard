@@ -32,10 +32,7 @@ const removeEmptyLinesAtStart = (text) => {
 };
 
 const getJsonTextOnly = (text) => {
-  if (text.startsWith("| Role")) {
-    return text;
-  }
-  if (text.startsWith("Role")) {
+  if (text.startsWith("| Role") || text.startsWith("|Role") || text.startsWith("Role")) {
     return text;
   }
   return getJsonTextOnly(text.slice(1));
