@@ -55,7 +55,7 @@ function Pdf({ state }) {
     <div>
       <a
         href={instance?.url}
-        download="Storybus.pdf"
+        download="Stffing Book.pdf"
         className="self-center bg-black-transparent hover:bg-secondary px-6 py-3 rounded-lg transition-all duration-300"
       >
         Export to PDF

@@ -6,6 +6,7 @@ import StaffingNotes from "./StaffingNotes";
 import ProjectDescription from "./ProjectDescription";
 import RoleImportance from "./RoleImportance";
 import RoleAssessment from "./RoleAssessment";
+import IdealTeam from "./IdealTeam";
 
 const removeEmptyLinesAtStart = (text) => {
   if (text.startsWith("\n")) {
@@ -44,6 +45,7 @@ const formatRoleImportance = (roleImportance) => {
 function PdfDocument({
   projectDescription,
   staffingNotes,
+  idealTeam,
   roleImportance,
   roleAssessment,
 }) {
@@ -57,6 +59,7 @@ function PdfDocument({
           <ProjectDescription projectDescription={projectDescription} />
         )}
         {staffingNotes && <StaffingNotes staffingNotes={staffingNotes} />}
+        {idealTeam && <IdealTeam idealTeam={idealTeam} />}
         {roleImportance && (
           <RoleImportance
             roleImportanceArray={formatRoleImportance(roleImportance)}

@@ -41,10 +41,10 @@ function StaffingHelper({ state, dispatch }) {
 
     switch (conversationStep) {
       case "staffing-notes-end":
-        dispatch({ type: "SET_STAFFING_NOTES", payload: response });
-        break;
-      case "ideal-team-end":
-        dispatch({ type: "SET_IDEAL_TEAM", payload: response });
+        dispatch({
+          type: "SET_STAFFING_NOTES",
+          payload: response,
+        });
         break;
       case "role-importance-end":
         dispatch({
@@ -132,8 +132,6 @@ function StaffingHelper({ state, dispatch }) {
     conversationRef.current.scrollTo(0, conversationRef.current.scrollHeight);
   }, [conversations]);
 
-  console.log(state);
-
   return (
     <div className="flex">
       <div className="w-full h-full flex justify-center px-2 items-end pb-10 mt-10 gap-5">
@@ -146,6 +144,7 @@ function StaffingHelper({ state, dispatch }) {
                     <AiMessage
                       text={message.text}
                       step={message.conversationStep}
+                      dispatch={dispatch}
                     />
                   </div>
                 );
@@ -179,7 +178,7 @@ function StaffingHelper({ state, dispatch }) {
           {timelineSteps.map((item, index) => {
             if (listIndex !== index)
               return [
-                <div className="flex w-[85%]">
+                <div className="flex w-[85%]" key={index}>
                   <div className=" w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-white flex justify-center items-center mr-4 text-black font-semibold ">
                     {index + 1}
                   </div>
@@ -188,7 +187,7 @@ function StaffingHelper({ state, dispatch }) {
               ];
             else
               return [
-                <div className="flex w-[85%]">
+                <div className="flex w-[85%]" key={index}>
                   <div className=" w-[3vh] h-[3vh] rounded-[50%] shrink-0 bg-secondary flex justify-center items-center mr-4 text-white font-semibold ">
                     {index + 1}
                   </div>

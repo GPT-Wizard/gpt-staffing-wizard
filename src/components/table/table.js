@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -36,7 +36,7 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <button
-        className='flex px-2 py-1 m-2 border items-center border-secondary rounded-lg'
+        className="flex px-2 py-1 m-2 border items-center border-secondary rounded-lg"
         onClick={handleClick}
       >
         <AddIcon />
@@ -46,9 +46,14 @@ function EditToolbar(props) {
   );
 }
 
-export default function DataEditingGrid({ data }) {
+export default function DataEditingGrid({ data, dispatch }) {
   const [rows, setRows] = React.useState(data);
   const [rowModesModel, setRowModesModel] = React.useState({});
+
+  useEffect(() => {
+    dispatch({ type: "SET_IDEAL_TEAM", payload: rows });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows]);
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -107,16 +112,16 @@ export default function DataEditingGrid({ data }) {
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              icon={<SaveIcon className='invert' />}
-              label='Save'
+              icon={<SaveIcon className="invert" />}
+              label="Save"
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              icon={<CancelIcon className='invert' />}
-              label='Cancel'
-              className='textPrimary'
+              icon={<CancelIcon className="invert" />}
+              label="Cancel"
+              className="textPrimary"
               onClick={handleCancelClick(id)}
-              color='inherit'
+              color="inherit"
             />,
           ];
         }
@@ -124,16 +129,16 @@ export default function DataEditingGrid({ data }) {
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
-            label='Edit'
-            className='textPrimary'
+            label="Edit"
+            className="textPrimary"
             onClick={handleEditClick(id)}
-            color='inherit'
+            color="inherit"
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
-            label='Delete'
+            label="Delete"
             onClick={handleDeleteClick(id)}
-            color='inherit'
+            color="inherit"
           />,
         ];
       },
@@ -164,7 +169,7 @@ export default function DataEditingGrid({ data }) {
       <DataGrid
         rows={rows}
         columns={columns}
-        editMode='row'
+        editMode="row"
         hideFooter
         autoHeight
         rowModesModel={rowModesModel}

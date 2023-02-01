@@ -151,8 +151,8 @@ const UserInput = ({
     case conversationSteps[10]:
       return (
         <SingleButton
-          text1="Create new plan"
-          onSubmit1={() => restartConversation()}
+          text="Create new plan"
+          onSubmit={() => restartConversation()}
         />
       );
 
