@@ -10,6 +10,7 @@ function StaffingNotes({ staffingNotes }) {
         <Image src={NotesIcon} style={styles.section.heading.icon} />
         <Text style={styles.section.heading.text}>Staffing Notes</Text>
       </View>
+      <View style={styles.break} />
       <Text style={styles.section.text}>{staffingNotes}</Text>
     </View>
   );

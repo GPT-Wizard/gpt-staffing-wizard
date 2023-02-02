@@ -18,7 +18,7 @@ Font.register({
     { src: InterBold, fontWeight: "bold" },
   ],
 });
-Font.registerHyphenationCallback((word) => [word]);
+// Font.registerHyphenationCallback((word) => [word]);
 
 function Pdf({ state }) {
   const [loadPdf, setLoadPdf] = useState(false);
@@ -56,7 +56,7 @@ function Pdf({ state }) {
       <a
         href={instance?.url}
         download="Stffing Book.pdf"
-        className="self-center bg-black-transparent hover:bg-secondary px-6 py-3 rounded-lg transition-all duration-300"
+        className="self-center bg-secondary hover:bg-secondary-transparent px-6 py-3 rounded-lg transition-all duration-300"
       >
         Export to PDF
       </a>
