@@ -16,7 +16,7 @@ Say hello to Staffing Spell by GPT Wizard! This magical solution from Thoughtwor
 ### One-Click Deploy with Vercel
 1. Click on the button below
 
-    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGPT-Wizard%2Fgpt-reviewer&env=REACT_APP_OPENAI_API_KEY&envDescription=PLACE%20YOUR%20OPEN%20AI%20API%20KEY&envLink=https%3A%2F%2Fbeta.openai.com%2Faccount%2Fapi-keys&project-name=gpt-reviewer&repository-name=GPT-Reviewer&redirect-url=https%3A%2F%2Fgithub.com%2FGPT-Wizard%2Fgpt-reviewer&demo-title=GPT%20Reviewer&demo-description=Your%20own%20GPT%20bot%20is%20deployed&demo-url=https%3A%2F%2Fgpt-reviewer-thoughtworks-wizards.vercel.app%2F)
+    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGPT-Wizard%2Fgpt-staffing-wizard&env=REACT_APP_OPENAI_API_KEY&envDescription=Your%20OpenAI%20GPT-3%20API%20Key&envLink=https%3A%2F%2Fplatform.openai.com%2Faccount%2Fapi-keys&project-name=gpt-staffing-wizard&repository-name=gpt-staffing-wizard&demo-title=GPT%20Staffing%20Spell&demo-description=Experience%20effortless%20staffing%20with%20Staffing%20Spell%20by%20GPT%20Wizard.%20A%20magical%20solution%20that%20creates%20perfect%20teams%2C%20identifies%20role%20importance%20%26%20assesses%20for%20onboarding%20with%20just%20a%20project%20description.%20Unleash%20the%20magic%20today!%20%F0%9F%A7%99%E2%80%8D%E2%99%82%EF%B8%8F)
 
 2. Log in/Sign up on Vercel
 3. Place your OpenAI GPT-3 API Key in the environment variable
