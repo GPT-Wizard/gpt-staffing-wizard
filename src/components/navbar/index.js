@@ -1,5 +1,4 @@
 import React from "react";
-import GptLogo from "../../assets/images/gpt-wizard.png";
 import Pdf from "../../pages/pdf";
 
 function Navbar(props) {
@@ -8,14 +7,10 @@ function Navbar(props) {
       <div className="flex justify-between py-6 pt-7 font-inter items-center">
         <div className="flex items-center">
           <img
-            src={GptLogo}
-            className="h-16 border-r-mist-gray border-r-[1.5px] mr-3 pr-1"
-            alt="GPT Reviewer Logo"
+            src="https://images.ctfassets.net/a0typynlh1op/GslXGcvQSCrg29kFSYLpl/e1452c04a4127a473d1f515fe9b5c4d8/Group_134191.png"
+            className="h-10"
+            alt="Thoughtworks GPT Staffing Spell"
           />
-          <div>
-            <p className="font-bitter text-xl">Staffing</p>
-            <p className="font-bitter text-xl">Wizard</p>
-          </div>
         </div>
         <Pdf {...props} />
       </div>
