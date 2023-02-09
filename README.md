@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://images.ctfassets.net/a0typynlh1op/GslXGcvQSCrg29kFSYLpl/e1452c04a4127a473d1f515fe9b5c4d8/Group_134191.png" alt="Thoughtworks GPT Staffing Spell" style="width: 600px;" />
+  <img src="https://images.ctfassets.net/a0typynlh1op/4rUQZSA4RGTwz7lrVYmvjV/0d67495e2d5b46bd27e9df33d938d305/thoughtworks-staffing-spell.png?fm=jpg&fl=progressive" alt="Thoughtworks GPT Staffing Spell" style="width: 600px;" />
 </div>
 
 <br/>
