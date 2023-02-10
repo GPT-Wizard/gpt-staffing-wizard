@@ -4,7 +4,7 @@
 
 <br/>
 
-Say hello to Staffing Spell by GPT Wizard! This magical solution from Thoughtworks will make staffing a breeze. Simply provide a project description and let Staffing Spell do the rest. It will create the perfect team, identify the importance of each role, and even help you assess for onboarding. Say goodbye to manual work and hello to effortless staffing. Unleash the power of Staffing Spell today!
+Say hello to Staffing Spell by GPT Wizard! This magical solution will make staffing a breeze. Simply provide a project description and let Staffing Spell do the rest. It will create the perfect team, identify the importance of each role, and even help you assess for onboarding. Say goodbye to manual work and hello to effortless staffing. Unleash the power of Staffing Spell today!
 
 ## Requirements ✅
 
