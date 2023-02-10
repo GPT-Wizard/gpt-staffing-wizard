@@ -7,7 +7,7 @@ function Navbar(props) {
       <div className="flex justify-between py-6 pt-7 font-inter items-center">
         <div className="flex items-center">
           <img
-            src="https://images.ctfassets.net/a0typynlh1op/GslXGcvQSCrg29kFSYLpl/e1452c04a4127a473d1f515fe9b5c4d8/Group_134191.png"
+            src="https://images.ctfassets.net/a0typynlh1op/2k75gT4whjLt7desggIdUQ/baaf485404dc4b68820cabaf95c118b7/staffing-spell-low-resolution-logo-color-on-transparent-background__1_.png"
             className="h-10"
             alt="Thoughtworks GPT Staffing Spell"
           />
