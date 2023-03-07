@@ -4,12 +4,13 @@
 
 <br/>
 
-Say hello to Staffing Spell by GPT Wizard! This magical solution will make staffing a breeze. Simply provide a project description and let Staffing Spell do the rest. It will create the perfect team, identify the importance of each role, and even help you assess for onboarding. Say goodbye to manual work and hello to effortless staffing. Unleash the power of Staffing Spell today!
+Welcome to Staffing Spell, an AI-powered solution that provides suggestions for team staffing based on a project's description.
 
-## Requirements ✅
+Staffing Spell is designed to make staffing easier by leveraging the power of GPT-3 API. It suggests staffing notes from both a technical and non-technical perspective, identifies the ideal team for the project, highlights the importance of each role, and provides guidance on assessing each role for onboarding.
 
-- Node JS (Version > 16.x)
-- OpenAI GPT-3 API Key ([Get one now!](https://platform.openai.com/account/api-keys))
+Please note that Staffing Spell is not a replacement for a staffing team. It is simply a tool that can help with staffing suggestions and make the process more efficient.
+
+Unleash the power of Staffing Spell today and enjoy effortless staffing!
 
 ## Getting Started Guide ⚙️
 
